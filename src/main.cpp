@@ -140,6 +140,12 @@ static void mainFrame(const jvmti& jvmti_instance)
     maps::Main Main{};
     Main.onLoad();
 
+    //maps::String title = Main.getWindowTitle();
+    //if (title)
+    //    logger::log(std::string("Window Title: ") + title.to_string());
+    //else
+    //    logger::error("failed to get window title");
+
     while (!is_uninject_key_pressed())
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));

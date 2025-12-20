@@ -6,3 +6,5 @@
 /out/
 
 src/InjectableJar.jar.hpp
+mcSourceCode/
+local_maven_repo/

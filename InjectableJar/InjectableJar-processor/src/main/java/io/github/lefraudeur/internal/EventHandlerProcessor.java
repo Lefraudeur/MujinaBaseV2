@@ -117,12 +117,18 @@ public class EventHandlerProcessor extends AbstractProcessor
 
             switch (annotation.type())
             {
+                // Triggered at the very first instruction of the target method.
+                // Allows for argument inspection and method cancellation via a 'Canceler' object.
                 case ON_ENTRY:
                     classModifier.addModifier(new EntryMethodModifier(info));
                     break;
+                // Triggered before any RETURN or ATHROW instruction.
+                // Captures the return value (if any) or the exception being thrown for modification.
                 case ON_RETURN_THROW:
                     classModifier.addModifier(new ReturnThrowMethodModifier(info));
                     break;
+                // Triggered when an LDC (Load Constant) instruction is encountered in the bytecode.
+    // Replaces hardcoded values (Strings, Doubles, Integers) by passing them through the handler.
                 case ON_LDC_CONSTANT:
                     classModifier.addModifier(new LDCConstantModifier(info));
                     break;

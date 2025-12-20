@@ -33,7 +33,7 @@
                         </goals>
 
                         <configuration>
-                            <outputDirectory>${project.basedir}/remapper/libs</outputDirectory>
+                            <outputDirectory>${project.basedir}/remapper/libs/1.8.9</outputDirectory>
                             <excludeGroupIds>minecraft.client,io.github.lefraudeur,org.ow2.asm</excludeGroupIds>
                         </configuration>
                     </execution>

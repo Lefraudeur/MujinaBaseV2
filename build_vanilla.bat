@@ -37,7 +37,7 @@ echo.
 echo.
 echo Building dll
 cd ..\..\..\
-cmake -B build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DMINECRAFT_CLASS="bao" --fresh
+cmake -B build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DMINECRAFT_CLASS="ave" --fresh
 cmake --build build
 
 echo.

@@ -90,6 +90,7 @@ namespace maps
 	BEGIN_KLASS_DEF(Main, "io/github/lefraudeur/Main")
 		jni::method<void, "onLoad", jni::STATIC> onLoad{ *this };
 		jni::method<void, "onUnload", jni::STATIC> onUnload{ *this };
+		//jni::method<String, "getWindowTitle", jni::STATIC> getWindowTitle{ *this };
 	END_KLASS_DEF()
 
 	BEGIN_KLASS_DEF_EX(EventClassLoader, "io/github/lefraudeur/internal/EventClassLoader", ClassLoader)

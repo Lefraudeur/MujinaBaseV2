@@ -1,11 +1,17 @@
 package io.github.lefraudeur.internal.patcher;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import io.github.lefraudeur.internal.Canceler;
 import io.github.lefraudeur.internal.Thrower;
 import net.minecraft.client.Minecraft;
-
-import java.lang.reflect.Field;
-import java.util.*;
 
 // bunch of static methods called by c++ transformer
 public class PatcherHelper

@@ -16,4 +16,9 @@ public class Main
     {
         Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("Bye from Mujina"));
     }
+
+    public static String getWindowTitle()
+    {
+        return org.lwjgl.opengl.Display.getTitle();
+    }
 }

@@ -1,21 +1,21 @@
 # MujinaBaseV2
 
-An injectable java cheat base for minecraft with a cool event system, loaded with C++, that can remap to work on vanilla, forge and lunar client
+An injectable Java cheat base for Minecraft with a cool event system, loaded with C++, that can be remapped to work on Vanilla, Forge, and Lunar Client
 
-The base is for 1.7.10 minecraft. \
-and works only on windows.
+The base is for Minecraft 1.7.10. \
+and works only on Windows.
 
-This is not a way to inject Forge / Fabric mods, it only allows you to build an injectable jar that can access minecraft classes, as well as slightly modify existing minecraft methods' implementations using events.\
-Which means to actually make use of that base, you need to understand the minecraft source code, and know exactly which part of it you wish to modify, and what you wanna add to it.
+This is not a way to inject Forge / Fabric mods, it only allows you to build an injectable JAR that can access Minecraft classes, as well as slightly modify existing Minecraft methods' implementations using events.\
+Which means to actually make use of that base, you need to understand the Minecraft source code, and know exactly which part of it you wish to modify, and what you wanna add to it.
 # Building
 
-The project is meant to be fully portable, so it should work on any windows environment by running [build_srg.bat](build_srg.bat) (for forge) or [build_vanilla.bat](build_vanilla.bat) (for vanilla), [build_named.bat](build_named.bat) (for lunar) without manually installing dependencies or building tools.\
-However the maven project relies on multiple online repositories, which could break the build if they were to go offline. \
-The compiled dll will be saved in `build/JarLoader.dll`
+The project is meant to be fully portable, so it should work on any Windows environment by running [build_srg.bat](build_srg.bat) (for Forge) or [build_vanilla.bat](build_vanilla.bat) (for Vanilla), [build_named.bat](build_named.bat) (for Lunar) without manually installing dependencies or building tools.\
+However the Maven project relies on multiple online repositories, which could break the build if they were to go offline. \
+The compiled DLL will be saved in `build/JarLoader.dll`
 
-By default the dll should print "hello from Mujina" in chat on inject and "bye from Mujina" on uninject. \
+By default the DLL should print "hello from Mujina" in chat on inject and "bye from Mujina" on uninject. \
 It also has some code to showcase how you can use the event system: 
-- xray, (enable it by pressing x, you may also need to disable smooth lighting and fog to see the blocks properly). \
+- Xray, (enable it by pressing x, you may also need to disable smooth lighting and fog to see the blocks properly). \
 - 4 blocks reach enabled by default
 - the client brand name sent to the server on login has "Mujina Boosted" appended
 And maybe some other test code I forgot to mention here
@@ -23,22 +23,22 @@ See : [TestClass.java](InjectableJar/InjectableJar/src/main/java/io/github/lefra
 
 Since you don't build using your IDE, make sure you save all the files you edited with your IDE first.
 
-If security is a concern, you can use the jdk / mave / cmake / visual studio build tools you downloaded yourself from a trusted source, just make sure that they are in your PATH, or edit [env.bat](env.bat)
+If security is a concern, you can use the JDK / Maven / CMake / Visual Studio build tools you downloaded yourself from a trusted source, just make sure that they are in your PATH, or edit [env.bat](env.bat)
 
 # Using the base
 
-The actual java cheat that's beeing injected is the maven project in the folder [InjectableJar/InjectableJar](InjectableJar/InjectableJar).\
+The actual Java cheat that's being injected is the Maven project in the folder [InjectableJar/InjectableJar](InjectableJar/InjectableJar).\
 It is the only part of the project you should need to modify most of the time as a user, and where you would code your modules.\
-In this project, Minecraft renamed jar (official client jar but rempped to human readable mcp names) is included as a dependency, and you can refer Minecraft classes in your code.\
-It can't be built alone, as it depends on the other projects InjectableJar-commons and InjectableJar-processor, so make sure to open your IDE in the parent maven project \
-Make sure to configure it to use the right jdk version (java 8)
+In this project, Minecraft renamed JAR (official client JAR but remapped to human readable MCP names) is included as a dependency, and you can refer Minecraft classes in your code.\
+It can't be built alone, as it depends on the other projects InjectableJar-commons and InjectableJar-processor, so make sure to open your IDE in the parent Maven project \
+Make sure to configure it to use the right JDK version (Java 8)
 
-## Event system
+## Event System
 The real hassle when making an injectable cheat in java, is not really adding the jar to the classpath, it usually takes only one line of code, \
-but actually setting up "events", meaning adding instructions to a game's function so that it calls one of the method in your cheat jar. \
-Otherwise you just have useless classes in the jvm that are never used. \
+but actually setting up "events", meaning adding instructions to a game's function so that it calls one of the method in your cheat JAR. \
+Otherwise you just have useless classes in the JVM that are never used. \
 The @EventHandler annotation allows you to do that. \
-Be aware that the @EventHandler annotation is first checked by the annotation processor for incoherent target method and event handler signature, and will fail the compilation in such cases. \
+Be aware that the @EventHandler annotation is first checked by the annotation processor for mismatched target method and event handler signature, and will fail the compilation in such cases. \
 It is purposefully strict to avoid having surprises at runtime.
 
 There are some examples in [TestClass.java](InjectableJar/InjectableJar/src/main/java/io/github/lefraudeur/TestClass.java)
@@ -47,7 +47,7 @@ There are some examples in [TestClass.java](InjectableJar/InjectableJar/src/main
 #### On entry event handler
 This can be used to add a call to your event handler at the beginning of a method. \
 To declare an event handler you have to define a public static method and annotate with @EventHandler :
-```JAVA
+```java
     @EventHandler(type=ON_ENTRY,
             targetClass = "net/minecraft/client/entity/EntityClientPlayerMP",
             targetMethodName = "sendChatMessage",
@@ -61,7 +61,7 @@ To declare an event handler you have to define a public static method and annota
 The return type must be the same as the target method's one \
 The first parameter must be of type Canceler. \
 If the target method is static, the second parameter type must be targetClass (it will hold this object). \
-The ramaining parameters must be the same as the target method ones.
+The remaining parameters must be the same as the target method ones.
 
 You can set `canceler.cancel = true`, to immediately return and cancel the execution of the method, in this case the return value will be the one returned by the event handler.\
 If not canceled, the return value of the event handler is ignored.
@@ -71,7 +71,7 @@ targetMethodDescriptor : as described in [Java Virtual Machine Specification 4.3
 ### On return/throw event handler
 This can be used to add a call to your event handler before any XRETURN / ATHROW instruction of a method. \
 To declare an event handler you have to define a public static method and annotate with @EventHandler :
-```JAVA
+```java
     @EventHandler(type=ON_RETURN_THROW,
             targetClass = "net/minecraft/client/ClientBrandRetriever",
             targetMethodName = "getClientModName",
@@ -89,7 +89,7 @@ If the event was triggered because of an ATHROW instruction, then `thrower.throw
 ### On LDC constant load instruction
 Some constants are pushed on the stack using an LDC instruction (see JVM specification), this event handler allows you to change the value pushed on stack by an LDC instruction
 For example, this event handler will replace the constant 3.0 by 4.0 in the getMouseOver method to change the reach to 4.0.
-```JAVA
+```java
     @EventHandler(type=ON_LDC_CONSTANT,
             targetClass = "net/minecraft/client/renderer/EntityRenderer",
             targetMethodName = "getMouseOver",
@@ -101,31 +101,31 @@ For example, this event handler will replace the constant 3.0 by 4.0 in the getM
         return value;
     }
 ```
-The event handler must be a public static method, it's return type must be Object, and it must have a single parameter of type Object as well. \
+The event handler must be a public static method, its return type must be Object, and it must have a single parameter of type Object as well. \
 value's Class and returned value's Class must be the same. \
 The returned value will replace the one normally pushed by the LDC instruction. \
 value's Class can be one of : String, Integer, Float, Double, Long, MethodType, MethodHandle, Class (dynamic constant not supported because I didn't bother reading its documentation)
 
-# Known issues
+# Known Issues
 - The classes aren't unloaded properly
 
 - On reinject, some modifications made to the jar might not be taken into account, because it will use the previous classes that haven't been unloaded properly. 
 
 - It leaves a lot of traces (not fixable)
 
-- The classloader trick I use for the modified method to be able to call event handlers might not work on all clients, for example on lunar, the classLoader does not necessarily forward the loadClass to its parent first, except for some internal jdk classes, which breaks the trick. (using reflection will also fix that, at the cost of performance, since the classloader trick won't be needed anymore) \
-Edit : injection  on lunar has been fixed, by excluding the event handler classes from lunar classloader (the lunar classloader holds a Set with excluded class names)
+- The classloader trick I use for the modified method to be able to call event handlers might not work on all clients, for example on Lunar, the classLoader does not necessarily forward the loadClass to its parent first, except for some internal JDK classes, which breaks the trick. (using reflection will also fix that, at the cost of performance, since the classloader trick won't be needed anymore) \
+Edit: Injection on Lunar has been fixed, by excluding the event handler classes from Lunar classloader (the Lunar classloader holds a Set with excluded class names)
 
-- The classloader trick seems to only work on java 8
+- The classloader trick seems to only work on Java 8
 
-- Since java 9, modules were introduced, it could cause some issues, for example I know a module has to list the modules it will use reflection on.
+- Since Java 9, modules were introduced, it could cause some issues, for example I know a module has to list the modules it will use reflection on.
 
-- The named minecraft jar, used as a library to allow InjectableJar to refer to minecraft code, was remapped from the official obfuscated minecraft jar, and thus is missing some information, not required to run the game, but required to debug or to develop additionnal content for the game.\
+- The named Minecraft JAR, used as a library to allow InjectableJar to refer Minecraft code, was remapped from the official obfuscated Minecraft JAR, and thus is missing some information, not required to run the game, but required to debug or to develop additional content for the game.\
 For example it's missing the inner classes attributes (see: [Java Virtual Machine Specification 4.7.6](https://docs.oracle.com/javase/specs/jvms/se25/html/jvms-4.html#jvms-4.7.6)),\
 which is for example used by the IDE to map the inner class `net/minecraft/network/play/client/C02PacketUseEntity$Action`, to its actual name you would use in your code : `net.minecraft.network.play.client.C02PacketUseEntity.Action`.\
-Without that information the IDE will treat the code as an error, thinking `net.minecraft.network.play.client.C02PacketUseEntity.Action` does not exist, since it will treat `C02PacketUseEntity` as a package, not as an outer class, and treat `net.minecraft.network.play.client.C02PacketUseEntity$Action` as a seperate, unrelated class.\
-To fix that you can write your code using `C02PacketUseEntity$Action` instead of `C02PacketUseEntity.Action` and ignore the error from the IDE, or you also can add the inner class attribute to the named minecraft jar manually, using ASM or [Recaf](https://github.com/Col-E/Recaf). For example to fix the `C02PacketUseEntity` and `C02PacketUseEntity$Action` inner class attributes you would: 
-    - open `InjectableJar\InjectableJar\local_maven_repo\minecraft\client\named\1.7.10\named-1.7.10.jar` using recaf
+Without that information the IDE will treat the code as an error, thinking `net.minecraft.network.play.client.C02PacketUseEntity.Action` does not exist, since it will treat `C02PacketUseEntity` as a package, not as an outer class, and treat `net.minecraft.network.play.client.C02PacketUseEntity$Action` as a separate, unrelated class.\
+To fix that you can write your code using `C02PacketUseEntity$Action` instead of `C02PacketUseEntity.Action` and ignore the error from the IDE, or you also can add the inner class attribute to the named Minecraft JAR manually, using ASM or [Recaf](https://github.com/Col-E/Recaf). For example to fix the `C02PacketUseEntity` and `C02PacketUseEntity$Action` inner class attributes you would: 
+    - open `InjectableJar\InjectableJar\local_maven_repo\minecraft\client\named\1.7.10\named-1.7.10.jar` using Recaf
     - edit the `net/minecraft/network/play/client/C02PacketUseEntity` and `net/minecraft/network/play/client/C02PacketUseEntity$Action` classes with the `Edit class in assembler` feature of Recaf and add the following code:
     ```
     .inner public final enum {
@@ -146,8 +146,8 @@ The eventClassLoader will forward the loadClass call to parentClassLoader as wha
 Note that this only works if the classLoader follows a classic classLoader delegation model.
 
 # Working Principle
-## Building process detailed
-### 1. InjectableJar parent maven project is built :
+## Building Process Detailed
+### 1. InjectableJar Parent Maven Project is Built :
 
 - Child [InjectableJar/InjectableJar-commons](InjectableJar/InjectableJar-commons) is built
 
@@ -155,13 +155,13 @@ Note that this only works if the classLoader follows a classic classLoader deleg
 
 - Child [InjectableJar/InjectableJar](InjectableJar/InjectableJar) is built, which causes the [annotation processor](InjectableJar/InjectableJar-processor) to be run :
 
-    For more informations about annotation processors see : [Processor javadoc](https://docs.oracle.com/en/java/javase/22/docs/api/java.compiler/javax/annotation/processing/Processor.html)
+    For more information about annotation processors see : [Processor javadoc](https://docs.oracle.com/en/java/javase/22/docs/api/java.compiler/javax/annotation/processing/Processor.html)
     and [javac annotation processing](https://docs.oracle.com/en/java/javase/22/docs/specs/man/javac.html#annotation-processing) \
     The annotation processor will read the @EventHandler annotations and generate the class : io.github.lefraudeur.internal.patcher.Patcher, you can see the generated source file in `target/generated-sources`\
-    This class will regroup all required informations about the target classes and the transformations to apply, the annotation processor will also remap the names given to the @EventHandler annotations using [FabricMC mapping-io](https://github.com/FabricMC/mapping-io). \
-    It will use the properties `remapper.mappingFilePath`, `remapper.sourceNamespace`, `remapper.destinationNamespace` defined in [InjectableJar/pom.xml](InjectableJar/pom.xml), which can be overridden from the CLI,the `remapper.destinationNamespace` property is overridden in [build_vanilla.bat](build_vanilla.bat) : `mvn package -Dremapper.destinationNamespace=obfuscated`. \
+    This class will regroup all required information about the target classes and the transformations to apply, the annotation processor will also remap the names given to the @EventHandler annotations using [FabricMC mapping-io](https://github.com/FabricMC/mapping-io). \
+    It will use the properties `remapper.mappingFilePath`, `remapper.sourceNamespace`, `remapper.destinationNamespace` defined in [InjectableJar/pom.xml](InjectableJar/pom.xml), which can be overridden from the CLI. The `remapper.destinationNamespace` property is overridden in [build_vanilla.bat](build_vanilla.bat) : `mvn package -Dremapper.destinationNamespace=obfuscated`. \
     Example generated class source file (unreadable lol):
-    ```JAVA
+    ```java
     package io.github.lefraudeur.internal.patcher;
     import io.github.lefraudeur.internal.patcher.MethodModifier.MethodModifierInfo;
 
@@ -175,33 +175,33 @@ Note that this only works if the classLoader follows a classic classLoader deleg
         };
     }
     ```
-    This is an array of ClassModifier, each ClassModifier containing the target class's name that has to be modified. Giving the original class bytes, a ClassModifier is able to generate the transformed class bytes by applying a chain of transformations, each transformation beeing represented by a MethodModifier. The class bytes are edited using the asm library. The [asm user guide](https://asm.ow2.io/asm4-guide.pdf) is a great resource to learn how to use the library, and to learn java bytecode in general. Take also a look at the [Java Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se24/html/index.html).
-    The generated Patcher class is used by the [PatcherHelper](InjectableJar/InjectableJar/src/main/java/io/github/lefraudeur/internal/patcher/PatcherHelper.java) class, whose methods are called by [transformer.cpp](src/transformer/transformer.cpp). The role of [transformer.cpp](src/transformer/transformer.cpp) is to call jvmti [RetransformClasses](https://docs.oracle.com/en/java/javase/22/docs/specs/jvmti.html#RetransformClasses) on the classes that has to be modified (listed by the Patcher class generated by the annotation processor). This jvmti api allows to replace the definition of a loaded class at runtime.
+    This is an array of ClassModifier, each ClassModifier containing the target class's name that has to be modified. Giving the original class bytes, a ClassModifier is able to generate the transformed class bytes by applying a chain of transformations, each transformation being represented by a MethodModifier. The class bytes are edited using the asm library. The [ASM user guide](https://asm.ow2.io/asm4-guide.pdf) is a great resource to learn how to use the library, and to learn Java bytecode in general. Take also a look at the [Java Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se24/html/index.html).
+    The generated Patcher class is used by the [PatcherHelper](InjectableJar/InjectableJar/src/main/java/io/github/lefraudeur/internal/patcher/PatcherHelper.java) class, whose methods are called by [transformer.cpp](src/transformer/transformer.cpp). The role of [transformer.cpp](src/transformer/transformer.cpp) is to call JVMTI [RetransformClasses](https://docs.oracle.com/en/java/javase/22/docs/specs/jvmti.html#RetransformClasses) on the classes that has to be modified (listed by the Patcher class generated by the annotation processor). This JVMTI API allows to replace the definition of a loaded class at runtime.
 
     Before building the project, it will also copy the non shaded dependencies to `InjectableJar\InjectableJar\remapper\libs`, which will be given to tiny remapper as a class path.
 
-### 2. InjectableJar-1.0-SNAPSHOT-shaded.jar is remapped
+### 2. InjectableJar-1.0-SNAPSHOT-shaded.jar is Remapped
 Your classes now have symbolic references to minecraft classes / methods / fields using human readable names (mcp mappings in this case), however the minecraft client in which we wish to inject, probably doesn't use these names, so it has to be remapped, so that the references can be successfully resolved at runtime.
 
 This is done using [FabricMC tiny remapper](https://github.com/FabricMC/tiny-remapper), the tool is used as follows :
-```SH
+```sh
 java -jar tiny-remapper-0.9.0-fat.jar input.jar output_remapped.jar mappings_file.tiny source_namespace destination_namespace additional_class_paths...
 ```
-`source_namespace`and `destinatino_namespace` must be namespaces' names defined by `mappings_file.tiny` \
-`additional_class_paths` are paths to any jars your input.jar might depend on. 
+`source_namespace`and `destination_namespace` must be namespaces' names defined by `mappings_file.tiny` \
+`additional_class_paths` are paths to any JARs your input.jar might depend on. 
 
-### 3. Remapped InjectableJar-1.0-SNAPSHOT-shaded.jar's bytes are written in `InjectableJar.jar.hpp`
+### 3. Remapped InjectableJar-1.0-SNAPSHOT-shaded.jar's Bytes are Written in `InjectableJar.jar.hpp`
 This is done using ignore_File2Hex.exe, which will convert any file in the working directory that doesn't start with ignore_ and doesn't end with .hpp, into the corresponding .hpp file. \
 The source code for that program can be found here : [File2hex/main.cpp](File2Hex/main.cpp)
 
-### 4. The C++ cmake project is built
-```SH
+### 4. The C++ CMake project is built
+```sh
 cmake -B build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DMINECRAFT_CLASS="bao"
 cmake --build build
 ```
 The dll needs to be aware of the Minecraft class name, so that it can get its class loader. For [build_vanilla.bat](build_vanilla.bat), it's "bao", as written in [1.7.10.tiny]()
 
-## What happens on inject
+## What Happens on Inject
 Writing in progress, read the src for now
 
 ClassLoader hierarchy, from parent to child : minecraftClassLoader -> secureClassLoader -> memoryJarClassLoader
@@ -218,7 +218,7 @@ The c++ part makes use of [MetaJNI](https://github.com/Lefraudeur/MetaJNI) to ma
 At the moment, there is no way to call the original method that won't trigger the event. \
 So do not call the modified method from its event handler, otherwise you will end up in an infinite loop. \
 The possible workarounds would be :
-- Make a boolean that would tell your handler to immediatly return without doing anything (not reliable)
+- Make a boolean that would tell your handler to immediately return without doing anything (not reliable)
 - Reimplement the original method yourself (takes a lot of time, and will need to use reflection for private fields/methods)
 
 
